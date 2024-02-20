@@ -1,0 +1,31 @@
+{
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"server": "time-management-demo.postgres.database.azure.com",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"name": "demo",
+			"database": "time_management",
+			"username": "postgres"
+		},
+		{
+			"previewLimit": 50,
+			"server": "time-management-demo.postgres.database.azure.com",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"name": "Azure-demo",
+			"username": "egalibert",
+			"database": "time_management"
+		},
+		{
+			"previewLimit": 50,
+			"server": "time-management-demo.postgres.database.azure.com",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"name": "new_connection",
+			"database": "time_management",
+			"username": "egalibert"
+		}
+	]
+}
