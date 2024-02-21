@@ -7,7 +7,9 @@ from azure.storage.blob import BlobClient
 # Retrieve the connection string from an environment variable. Note that a
 # connection string grants all permissions to the caller, making it less
 # secure than obtaining a BlobClient object using credentials.
-conn_string = "AZURE_STORAGE_CONNECTION_STRING"
+conn_string = "AZURE_STORAGE_CONNECTION_STRING" 
+# vaihda connection string tähän 
+# az storage account show-connection-string --name timestorage123 --resource-group Elliot_Joel_RG
 
 # Create the client object for the resource identified by the connection
 # string, indicating also the blob container and the name of the specific
