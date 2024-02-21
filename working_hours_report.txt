@@ -1,0 +1,10 @@
+Consultant Report:
+John Doe: 7:00:00
+Jaakko Jaakkola: 7:00:00
+Pekka Korhonen: 7:00:00
+Simo Pukkila: 6:00:00
+
+Customer Report:
+ACME Corp: 7:00:00
+Apple: 7:00:00
+Microsoft: 13:00:00
