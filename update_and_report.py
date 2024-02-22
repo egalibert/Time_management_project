@@ -10,6 +10,7 @@ app = Flask(__name__)
 def index():
 	return {"index": True}
 
+# When /report is used  fetches data using all_rows(), validates it, updates the file and exports it to blob container.
 @app.route('/report', methods=['GET'])
 def post_working_hours():
 	data = all_rows()
