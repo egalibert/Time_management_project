@@ -2,7 +2,7 @@ import psycopg2
 from config import config
 from datetime import timedelta, datetime
 from collections import defaultdict, namedtuple
-from extra_table_creation import get_average_hours_per_day_per_consultant
+# from extra_table_creation import get_average_hours_per_day_per_consultant
 
 con = None
 
@@ -26,6 +26,40 @@ def all_rows():
 # Changes the seconds (from using datetime) into hours
 def timedelta_to_hours(td):
     return td.total_seconds() / 3600.0
+
+# Calculates the average working hours per consultant using both tables
+def get_average_hours_per_day_per_consultant():
+	try:
+		con = psycopg2.connect(**config())
+		cursor = con.cursor()
+
+		# SQL query to calculate average hours per day per consultant with rounding
+		query = """
+		SELECT
+			twt.consultant_name,
+			DATE(wh.start_time) AS work_date,
+			ROUND(AVG(EXTRACT(EPOCH FROM twt.total_balance) / 3600), 2) AS average_hours
+		FROM
+			total_working_time twt
+		JOIN
+			working_hours wh ON twt.consultant_name = wh.consultant_name
+		GROUP BY
+			twt.consultant_name, work_date
+		ORDER BY
+			twt.consultant_name, work_date;
+		"""
+
+		cursor.execute(query)
+		result = cursor.fetchall()
+		# print(result)
+		return result
+
+	except (Exception, psycopg2.DatabaseError) as error:
+		print(error)
+	finally:
+		if con is not None:
+			con.close()
+
 
 # Calculates the proper values and writes consultant_hours, customer_hours and cumulative_customer_hours and average hours into a file
 def write_to_file(data):

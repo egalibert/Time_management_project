@@ -83,39 +83,6 @@ def all_rows():
 			con.close()
 	return(row)
 
-# Calculates the average working hours per consultant using both tables
-def get_average_hours_per_day_per_consultant():
-	try:
-		con = psycopg2.connect(**config())
-		cursor = con.cursor()
-
-		# SQL query to calculate average hours per day per consultant with rounding
-		query = """
-		SELECT
-			twt.consultant_name,
-			DATE(wh.start_time) AS work_date,
-			ROUND(AVG(EXTRACT(EPOCH FROM twt.total_balance) / 3600), 2) AS average_hours
-		FROM
-			total_working_time twt
-		JOIN
-			working_hours wh ON twt.consultant_name = wh.consultant_name
-		GROUP BY
-			twt.consultant_name, work_date
-		ORDER BY
-			twt.consultant_name, work_date;
-		"""
-
-		cursor.execute(query)
-		result = cursor.fetchall()
-		# print(result)
-		return result
-
-	except (Exception, psycopg2.DatabaseError) as error:
-		print(error)
-	finally:
-		if con is not None:
-			con.close()
-
 # Main function that does everything: creates table if necessary, calculates total working time and fills table with data.
 def main():
 	create_total_working_time_table()
