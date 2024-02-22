@@ -1,7 +1,8 @@
 import psycopg2
 from config import config
 from datetime import timedelta, datetime
-from collections import defaultdict
+from collections import defaultdict, namedtuple
+from extra_table_creation import get_average_hours_per_day_per_consultant
 
 con = None
 
@@ -27,6 +28,8 @@ def timedelta_to_hours(td):
 def write_to_file(data):
     consultant_hours = defaultdict(timedelta)
     customer_hours = defaultdict(timedelta)
+    cumulative_customer_hours = defaultdict(timedelta)
+    CustomerRecord = namedtuple('CustomerRecord', ['customer_name', 'total_hours'])
 
     for record in data:
         record_id = record[0]
@@ -38,7 +41,8 @@ def write_to_file(data):
 
         total_working_time = end_time - start_time - lunch_break
         consultant_hours[consultant_name] += total_working_time
-        customer_hours[customer_name] += total_working_time
+        customer_hours[(consultant_name, customer_name)] += total_working_time
+        cumulative_customer_hours[customer_name] += total_working_time
 
     with open('working_hours_report.txt', 'w') as file:
         file.write("Consultant Report:\n")
@@ -46,12 +50,27 @@ def write_to_file(data):
             file.write(f"{consultant}: {total_hours}\n")
 
         file.write("\nCustomer Report:\n")
-        for customer, total_hours in customer_hours.items():
+        for (consultant, customer), total_hours in customer_hours.items():
+            file.write(f"{consultant} - {customer}: {total_hours}\n")
+
+        file.write("\nCumulative Working Hours Grouped by Customer:\n")
+        for customer, total_hours in cumulative_customer_hours.items():
             file.write(f"{customer}: {total_hours}\n")
+        
+        file.write("\nAverage Hours per Day per Consultant Report:\n")
+        report = get_average_hours_per_day_per_consultant()
+        if report is not None:
+            for row in report:
+                 file.write(f"{row[0]} on {row[1]}: {row[2]:.2f} hours\n")
+        else:
+            print("No data retrieved from get_average_hours_per_day_per_consultant")
+
 
 
 def main():
     data = all_rows()
     write_to_file(data)
+    # new_file_test(data)
 
-main()
+if __name__ == '__main__':
+    main()

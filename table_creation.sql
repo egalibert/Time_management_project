@@ -3,6 +3,6 @@ CREATE TABLE working_hours (
 	start_time TIMESTAMP NOT NULL,
 	end_time TIMESTAMP NOT NULL,
 	lunch_break INTERVAL, 
-	consultantName VARCHAR(50),
-	customerName VARCHAR (50)
+	consultant_name VARCHAR(50),
+	customer_name VARCHAR (50)
 );

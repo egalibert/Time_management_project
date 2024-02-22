@@ -1,10 +1,32 @@
 Consultant Report:
 John Doe: 7:00:00
-Jaakko Jaakkola: 7:00:00
+Jaakko Jaakkola: 20:00:00
 Pekka Korhonen: 7:00:00
 Simo Pukkila: 6:00:00
+Timo Virtanen: 14:00:00
+Ville Nieminen: 7:00:00
 
 Customer Report:
+John Doe - ACME Corp: 7:00:00
+Jaakko Jaakkola - Apple: 20:00:00
+Pekka Korhonen - Microsoft: 7:00:00
+Simo Pukkila - Microsoft: 6:00:00
+Timo Virtanen - Apple: 14:00:00
+Ville Nieminen - Amazon: 7:00:00
+
+Cumulative Working Hours Grouped by Customer:
 ACME Corp: 7:00:00
-Apple: 7:00:00
+Apple: 1 day, 10:00:00
 Microsoft: 13:00:00
+Amazon: 7:00:00
+
+Average Hours per Day per Consultant Report:
+Jaakko Jaakkola on 2024-02-17: 6.67 hours
+Jaakko Jaakkola on 2024-02-18: 6.67 hours
+Jaakko Jaakkola on 2024-02-19: 6.67 hours
+John Doe on 2024-02-20: 7.00 hours
+Pekka Korhonen on 2024-02-18: 7.00 hours
+Simo Pukkila on 2024-02-16: 6.00 hours
+Timo Virtanen on 2024-02-14: 7.00 hours
+Timo Virtanen on 2024-02-16: 7.00 hours
+Ville Nieminen on 2024-02-16: 7.00 hours

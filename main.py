@@ -41,6 +41,27 @@ def add_new_person(start_time, end_time, lunch_break, consultant_name, customer_
 # 	customer_name = "Apple"
 
 # 	add_new_person(start_time, end_time, lunch_break, consultant_name, customer_name)
-all_rows()
+# all_rows()
+			
+# def drop_total_working_time_table():
+#     try:
+#         con = psycopg2.connect(**config())
+#         cursor = con.cursor()
+
+#         # Drop the total_working_time table if it exists
+#         cursor.execute("""
+#             DROP TABLE IF EXISTS total_working_time;
+#         """)
+
+#         con.commit()
+#         cursor.close()
+#     except (Exception, psycopg2.DatabaseError) as error:
+#         print(error)
+#     finally:
+#         if con is not None:
+#             con.close()
+
+# # Example usage
+# drop_total_working_time_table()
 
 # main()
