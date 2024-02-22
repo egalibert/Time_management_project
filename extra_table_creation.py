@@ -5,6 +5,8 @@ from config import config
 
 con = None
 
+# Calculates the total working time by subtracting start_time and lunchbreak from end_time 
+# and returns it for future use
 def calculate_total_working_time(start_time, end_time, lunch_break):
 	start_datetime = datetime.strptime(str(start_time), "%Y-%m-%d %H:%M:%S")
 	end_datetime = datetime.strptime(str(end_time), "%Y-%m-%d %H:%M:%S")
@@ -13,6 +15,7 @@ def calculate_total_working_time(start_time, end_time, lunch_break):
 	total_working_time = end_datetime - start_datetime - lunch_break_timedelta
 	return total_working_time
 
+# Creates table of total working time if it doesnt already exsist
 def create_total_working_time_table():
 	try:
 		con = psycopg2.connect(**config())
@@ -35,12 +38,12 @@ def create_total_working_time_table():
 		if con is not None:
 			con.close()
 
+# Inserts the total working time into new_table
 def insert_total_balance(person_id, consultant_name, total_balance):
 	try:
 		con = psycopg2.connect(**config())
 		cursor = con.cursor()
 
-		# Insert total balance into the new table
 		cursor.execute("""
 			INSERT INTO total_working_time (person_id, consultant_name, total_balance)
 			VALUES (%s, %s, %s);
@@ -54,7 +57,7 @@ def insert_total_balance(person_id, consultant_name, total_balance):
 		if con is not None:
 			con.close()
 
-# Assuming you have data in the format you provided earlier
+# Queries all information from working_hours table
 def all_rows():
 	try:
 		con = psycopg2.connect(**config())
@@ -71,6 +74,7 @@ def all_rows():
 			con.close()
 	return(row)
 
+# Calculates the average working hours per consultant using both tables
 def get_average_hours_per_day_per_consultant():
 	try:
 		con = psycopg2.connect(**config())
@@ -94,10 +98,7 @@ def get_average_hours_per_day_per_consultant():
 
 		cursor.execute(query)
 		result = cursor.fetchall()
-
-		# Print or process the rounded result
-		print(result)
-
+		# print(result)
 		return result
 
 	except (Exception, psycopg2.DatabaseError) as error:
@@ -106,12 +107,11 @@ def get_average_hours_per_day_per_consultant():
 		if con is not None:
 			con.close()
 
-
+# Main function that does everything: creates table if necessary, calculates total working time and fills table with data.
 def main():
 	create_total_working_time_table()
 	data = all_rows()
 
-	# Calculate total working time and insert into the new table
 	for record in data:
 		person_id = record[0]
 		start_time = record[1]
@@ -121,12 +121,6 @@ def main():
 
 		total_working_time = calculate_total_working_time(start_time, end_time, lunch_break)
 		insert_total_balance(person_id, consultant_name, total_working_time)
-
-	# print("Total balance table created and populated.")
-	# get_total_hours_per_consultant()
-
-	# print("\nAverage working hours per day:")
-	# get_average_hours_per_day_per_consultant()
 
 if __name__ == '__main__':
 	main()
