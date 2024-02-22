@@ -38,16 +38,25 @@ def create_total_working_time_table():
 		if con is not None:
 			con.close()
 
-# Inserts the total working time into new_table
+# Inserts the total working time into new_table, if the consultant already exists it adds the total time
 def insert_total_balance(person_id, consultant_name, total_balance):
 	try:
 		con = psycopg2.connect(**config())
 		cursor = con.cursor()
 
-		cursor.execute("""
-			INSERT INTO total_working_time (person_id, consultant_name, total_balance)
-			VALUES (%s, %s, %s);
-		""", (person_id, consultant_name, total_balance))
+		cursor.execute("SELECT * FROM total_working_time WHERE consultant_name = %s", (consultant_name,))
+		existing_row = cursor.fetchone()
+
+		if existing_row:
+			# If exists, update total_balance
+			new_total_balance = existing_row[2] + total_balance
+			print(new_total_balance)
+			cursor.execute("UPDATE total_working_time SET total_balance = %s WHERE consultant_name = %s",
+						(new_total_balance, consultant_name))
+		else:
+			# If not exists, insert new row
+			cursor.execute("INSERT INTO total_working_time (person_id, consultant_name, total_balance) VALUES (%s, %s, %s)",
+						(person_id, consultant_name, total_balance))
 
 		con.commit()
 		cursor.close()

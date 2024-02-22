@@ -2,6 +2,7 @@ import flask
 import psycopg2
 from config import config
 
+#Selects all rows from Working hours (first table)
 def all_rows():
 	try:
 		con = psycopg2.connect(**config())
@@ -16,7 +17,7 @@ def all_rows():
 	finally:
 		if con is not None:
 			con.close()
-
+#Inserts new person to Working hours table (first table)
 def add_new_person(start_time, end_time, lunch_break, consultant_name, customer_name):
 	try:
 		con = psycopg2.connect(**config())
@@ -61,7 +62,7 @@ def add_new_person(start_time, end_time, lunch_break, consultant_name, customer_
 #         if con is not None:
 #             con.close()
 
-# # Example usage
+# Example usage
 # drop_total_working_time_table()
 
 # main()
