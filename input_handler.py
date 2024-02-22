@@ -6,27 +6,26 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+# The connection to /working_hours. Takes posted json data validates it and inserts it into working_hours table. 
 @app.route('/working_hours', methods=['POST'])
 def post_working_hours():
 	data = request.get_json()
-	print(data)
+	# print(data)
 
 	insert_data(data)
 
-	# Validate and process input data
 	if validate_input(data):
 		return {"message": "Data successfully inserted into the database"}
 	else:
 		return {"error": "Invalid input data"}, 400
 
+# Used to make sure data is valid for inserting
 def validate_input(data):
 	return True  # Placeholder, implement your validation logic
 
+# Uses SQL to insert posted data into table.
 def insert_data(data):
-	# Connect to PostgreSQL database
 	con = psycopg2.connect(**config())
-
-	# Create a cursor
 	cur = con.cursor()
 
 	# Insert data into the working_hours table
@@ -43,11 +42,8 @@ def insert_data(data):
 	)
 
 	cur.execute(sql, values)
-
-	# Commit the transaction
 	con.commit()
 
-	# Close the cursor and connection
 	cur.close()
 	con.close()
 	all_rows()
