@@ -35,18 +35,15 @@ def get_average_hours_per_day_per_consultant():
 
 		# SQL query to calculate average hours per day per consultant with rounding
 		query = """
-		SELECT
-			twt.consultant_name,
-			DATE(wh.start_time) AS work_date,
-			ROUND(AVG(EXTRACT(EPOCH FROM twt.total_balance) / 3600), 2) AS average_hours
-		FROM
-			total_working_time twt
-		JOIN
-			working_hours wh ON twt.consultant_name = wh.consultant_name
-		GROUP BY
-			twt.consultant_name, work_date
-		ORDER BY
-			twt.consultant_name, work_date;
+        SELECT
+            w.consultant_name,
+            SUM(EXTRACT(EPOCH FROM AGE(w.end_time, w.start_time) - w.lunch_break) / 3600) / COUNT(DISTINCT DATE(w.start_time)) AS average_working_time_per_day
+        FROM
+            working_hours w
+        JOIN
+            total_working_time t ON w.consultant_name = t.consultant_name
+        GROUP BY
+            w.consultant_name;
 		"""
 
 		cursor.execute(query)
@@ -96,13 +93,13 @@ def write_to_file(data):
         for customer, total_hours in cumulative_customer_hours.items():
             file.write(f"{customer}: {total_hours}\n")
         
-        file.write("\nAverage Hours per Day per Consultant Report:\n")
+        file.write("\nAverage Working Time per Day per Consultant Report:\n")
         report = get_average_hours_per_day_per_consultant()
         if report is not None:
             for row in report:
-                 file.write(f"{row[0]} on {row[1]}: {row[2]:.2f} hours\n")
+                file.write(f"{row[0]}: {row[1]:.2f} hours\n")
         else:
-            print("No data retrieved from get_average_hours_per_day_per_consultant")
+            print("No data retrieved from get_average_hours_per_day_per_consultantt")
 
 
 # main function runs the program
