@@ -89,7 +89,7 @@ def write_to_file(data):
         for (consultant, customer), total_hours in customer_hours.items():
             file.write(f"{consultant} - {customer}: {total_hours}\n")
 
-        file.write("\nCumulative Working Hours Grouped by Customer:\n")
+        file.write("\nTotal Working Hours Grouped by Customer:\n")
         for customer, total_hours in cumulative_customer_hours.items():
             file.write(f"{customer}: {total_hours}\n")
         
