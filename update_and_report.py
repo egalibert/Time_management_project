@@ -1,7 +1,7 @@
 from report_handler import all_rows, write_to_file, get_average_hours_per_day_per_consultant
 from report_uploader import export_data
 from input_handler import validate_input
-from update_and_report import extra_table_main
+from extra_table_creation import extra_table_main
 from flask import Flask, request
 
 app = Flask(__name__)
