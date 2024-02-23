@@ -6,6 +6,10 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+@app.route("/", methods=["GET"])
+def index():
+	return {"index": True}
+
 # The connection to /working_hours. Takes posted json data validates it and inserts it into working_hours table. 
 @app.route('/working_hours', methods=['POST'])
 def post_working_hours():
@@ -46,7 +50,7 @@ def insert_data(data):
 
 	cur.close()
 	con.close()
-	all_rows()
+	# all_rows()
 
 if __name__ == '__main__':
 	app.run(debug=True)
