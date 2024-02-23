@@ -5,6 +5,7 @@ Pekka Korhonen: 7:00:00
 Simo Pukkila: 6:00:00
 Timo Virtanen: 14:00:00
 Ville Nieminen: 7:00:00
+Mika Häkkinen: 7:00:00
 
 Customer Report:
 John Doe - ACME Corp: 7:00:00
@@ -13,16 +14,19 @@ Pekka Korhonen - Microsoft: 7:00:00
 Simo Pukkila - Microsoft: 6:00:00
 Timo Virtanen - Apple: 14:00:00
 Ville Nieminen - Amazon: 7:00:00
+Mika Häkkinen - Ferrari: 7:00:00
 
 Cumulative Working Hours Grouped by Customer:
 ACME Corp: 7:00:00
 Apple: 1 day, 10:00:00
 Microsoft: 13:00:00
 Amazon: 7:00:00
+Ferrari: 7:00:00
 
 Average Working Time per Day per Consultant Report:
 Jaakko Jaakkola: 6.67 hours
 John Doe: 7.00 hours
+Mika Häkkinen: 7.00 hours
 Pekka Korhonen: 7.00 hours
 Simo Pukkila: 6.00 hours
 Timo Virtanen: 7.00 hours

@@ -84,7 +84,7 @@ def all_rows():
 	return(row)
 
 # Main function that does everything: creates table if necessary, calculates total working time and fills table with data.
-def main():
+def extra_table_main():
 	create_total_working_time_table()
 	data = all_rows()
 
@@ -99,4 +99,4 @@ def main():
 		insert_total_balance(person_id, consultant_name, total_working_time)
 
 if __name__ == '__main__':
-	main()
+	extra_table_main()
